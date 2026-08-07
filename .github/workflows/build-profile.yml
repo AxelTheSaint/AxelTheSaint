@@ -1,0 +1,76 @@
+name: Build profile console
+
+# Si ricompila SOLO quando cambia qualcosa che influenza l'output.
+#
+# Nessun `schedule:` di proposito. Un cron ricompilerebbe il README a intervalli
+# fissi; poiche' l'output e' deterministico (nessun timestamp di build nel
+# risultato) non produrrebbe alcun cambiamento utile, ma con un timestamp
+# genererebbe due commit al giorno di puro rumore nella history e nel grafico
+# dei contributi. Se un giorno servira' iniettare dati che cambiano da soli
+# (per esempio l'attivita' recente), quella sara' la ragione per aggiungere un
+# cron — non prima.
+on:
+  push:
+    branches: [main]
+    paths:
+      - data/**
+      - templates/**
+      - scripts/**
+      - requirements.txt
+      - .github/workflows/build-profile.yml
+  workflow_dispatch:
+
+# Il minimo indispensabile: il token puo' scrivere i contenuti e nient'altro.
+# Nessun accesso a issue, pull request, package, deployment o azioni.
+permissions:
+  contents: write
+
+# Due push ravvicinati non devono spingere due build in parallelo sullo stesso ref.
+concurrency:
+  group: build-profile
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Difesa in profondita'. `push` su main e `workflow_dispatch` richiedono gia'
+    # accesso in scrittura al repository, e una pull request da un fork non
+    # riceve questo token: nessun estraneo puo' arrivare qui. Questa riga serve
+    # nel caso in futuro venga aggiunto un collaboratore — solo il proprietario
+    # puo' far scrivere il bot.
+    if: github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      # Action pinnate al commit SHA, non al tag: un tag e' un riferimento
+      # mobile e chi lo controlla puo' cambiarne il contenuto sotto di noi.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # Nessun font di sistema, nessun Pillow, nessun fontconfig: l'engine
+      # produce testo, non pixel.
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build SVG assets and README
+        run: python scripts/build.py
+
+      # Un solo punto di commit e push in tutto il workflow.
+      # `assets` per intero, non solo assets/readme: le icone dei canali stanno
+      # in assets/icons e altrimenti resterebbero fuori dal commit.
+      - name: Commit if the output changed
+        run: |
+          if git diff --quiet -- README.md assets; then
+            echo "Nessuna modifica: l'output e' gia' aggiornato."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md assets
+          git commit -m "build: recompile profile console"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

@@ -1,0 +1,153 @@
+{# ===========================================================================
+   {{ system.designation }}
+   Template della console. Compilato da scripts/build.py — NON modificare il
+   README.md generato: le modifiche vanno qui o in data/profile.yml.
+
+   Ogni pannello ha due livelli:
+     - VISIVO   : lo <picture> con gli SVG (identita', 4 varianti per pannello)
+     - SEMANTICO: il Markdown sotto, in <details> (accessibilita', ricerca,
+                  copia-incolla, e cio' che resta se le immagini non caricano)
+   Non rimuovere il secondo perche' "e' gia' nell'immagine".
+   =========================================================================== #}
+{% macro pane(name, alt) -%}
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="./assets/readme/{{ name }}-mobile-dark.svg?v={{ assets_rev }}">
+    <source media="(max-width: 600px)" srcset="./assets/readme/{{ name }}-mobile-light.svg?v={{ assets_rev }}">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/readme/{{ name }}-desktop-dark.svg?v={{ assets_rev }}">
+    <img src="./assets/readme/{{ name }}-desktop-light.svg?v={{ assets_rev }}" width="100%" alt="{{ alt }}">
+  </picture>
+</p>
+{%- endmacro %}
+<!--
+  {{ system.designation }}
+  Generato da scripts/build.py a partire da data/profile.yml — non modificare a mano.
+-->
+
+{{ pane("01-hero", identity.name ~ " — " ~ identity.role ~ ". Mission-control console showing an architecture-first focus across backend, infrastructure, embedded systems and local AI.") }}
+
+<p align="center">
+{% for domain in identity.domains %}
+  <code>{{ domain }}</code>{% if not loop.last %}&nbsp;·&nbsp;{% endif %}
+
+{% endfor %}
+</p>
+
+{# I link devono stare QUI, nel Markdown: dentro un SVG servito come immagine
+   gli <a> non sono cliccabili. Le icone sono solo la superficie visiva. #}
+<p align="center">{% for channel in channels if channel.url %}<a href="{{ channel.url }}" title="{{ channel.alt }}"><picture><source media="(prefers-color-scheme: dark)" srcset="./assets/icons/{{ channel.key }}-dark.svg?v={{ assets_rev }}"><img src="./assets/icons/{{ channel.key }}-light.svg?v={{ assets_rev }}" width="74" height="46" alt="{{ channel.alt }}"></picture></a>{% endfor %}</p>
+
+{{ pane("telemetry-strip", "Animated system telemetry with activity bars, a scanning line and a rotating radar. Motion turns itself off when reduced motion is requested.") }}
+
+> **SYSTEM DOCTRINE** — {{ doctrine.statements | join(" ") }}
+
+## `TRM-17 // DOCTRINE + TELEMETRY`
+
+{{ pane("02-doctrine-telemetry", "Engineering manifesto and profile telemetry: " ~ telemetry | map(attribute='label') | join(", ") | lower ~ ".") }}
+
+<details>
+<summary><strong>OPEN TEXT TRANSMISSION // MANIFESTO</strong></summary>
+
+{% for statement in doctrine.statements %}
+- {{ statement }}
+{% endfor %}
+
+> **{{ doctrine.alert }}**
+
+| Readout | Value | Unit |
+| :--- | :---: | :--- |
+{% for item in telemetry %}
+| {{ item.label | title }} | `{{ item.value }}` | {{ item.unit | lower }} |
+{% endfor %}
+
+</details>
+
+## `SYS-94 // ENGINEERING RANGE`
+
+{{ pane("03-engineering", "Engineering capability matrix and technical loadout covering " ~ capabilities | map(attribute='label') | join(", ") ~ ".") }}
+
+<details>
+<summary><strong>EXPAND TECHNICAL LOADOUT</strong></summary>
+
+{% for group in loadout %}
+### {{ group.label }}
+
+{% for item in group['items'] %}`{{ item }}` {% endfor %}
+
+{% endfor %}
+### Engineering vectors
+
+{% for cap in capabilities %}
+- **{{ cap.label }} — {{ cap.score }}:** {{ cap.detail }}
+{% endfor %}
+
+</details>
+
+## `MSN-04 // MISSION CONTROL`
+
+{{ pane("04-missions", "Selected mission dossiers: " ~ missions | map(attribute='name') | join(", ") ~ ".") }}
+
+<details>
+<summary><strong>ACCESS MISSION DOSSIERS</strong></summary>
+
+{% for mission in missions %}
+### `{{ mission.code }} // {{ mission.name }}` — {{ mission.status }}
+
+{{ mission.description }}
+
+{% for tech in mission.stack %}`{{ tech }}` {% endfor %}
+{% if mission.repo %}
+
+[Repository →]({{ mission.repo }})
+{% endif %}
+
+{% endfor %}
+</details>
+
+## `LOG-09 // FLIGHT LOG + SIGNAL FILTER`
+
+{{ pane("05-flight-signal-comms", "Career flight log, collaboration signal filter and contact console for " ~ identity.name ~ ".") }}
+
+<details>
+<summary><strong>READ FLIGHT LOG AND COLLABORATION PROTOCOL</strong></summary>
+
+### Flight log
+
+{% for entry in flight_log %}
+- **{{ entry.year }} — {{ entry.title }}:** {{ entry.detail }}
+{% endfor %}
+
+### Signal accepted
+
+{% for item in signal.accept %}
+- {{ item }}.
+{% endfor %}
+
+### Signal rejected
+
+{% for item in signal.reject %}
+- {{ item }}.
+{% endfor %}
+
+</details>
+
+---
+
+<p align="center">
+  <strong>{{ availability.headline | upper }}</strong>
+</p>
+
+<p align="center">
+  <a href="mailto:{{ contact.email }}"><kbd>ESTABLISH EMAIL LINK</kbd></a>&nbsp;&nbsp;
+  <a href="https://github.com/{{ contact.github_user }}?tab=repositories"><kbd>INSPECT REPOSITORIES</kbd></a>
+</p>
+
+<p align="center">
+{% for channel in channels if channel.url %}
+  <a href="{{ channel.url }}"><kbd> {{ channel.value }} </kbd></a>&nbsp;
+{% endfor %}
+</p>
+
+<p align="center">
+  <sub><code>AS-CONSOLE // ALL SYSTEMS NOMINAL // END OF PUBLIC TRANSMISSION</code></sub>
+</p>

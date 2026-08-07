@@ -1,0 +1,218 @@
+# =============================================================================
+#  AXELTHESAINT // PERSONAL SYSTEMS CONSOLE — SINGLE SOURCE OF TRUTH
+# =============================================================================
+#  Questo file e' l'unica sorgente di verita' del profilo.
+#  Ogni pannello SVG e ogni riga del README.md sono derivati da qui.
+#
+#  Dopo una modifica:   python scripts/build.py
+#  Anteprima live:      python scripts/preview.py
+#
+#  FONTE DEI CONTENUTI
+#  Allineato a https://personal-website-7c1.pages.dev (/data/sections/*.json),
+#  estratto il 2026-08-06. Sito e profilo restano due sorgenti separate: se
+#  aggiorni uno, riallinea l'altro.
+#
+#  REGOLE DI LUNGHEZZA (per non rompere il layout dei pannelli):
+#    identity.statement ......  max ~120 caratteri
+#    capabilities[].note .....  max ~38 caratteri
+#    missions[].description ..  max ~110 caratteri (3 righe)
+#    missions[].kind .........  max ~28 caratteri
+#    flight_log[].title ......  max ~34 caratteri
+#    telemetry[].value .......  max 3 caratteri
+# =============================================================================
+
+system:
+  designation: "AXELTHESAINT // PERSONAL SYSTEMS CONSOLE"
+  revision: "REV. 26.08"
+  sector: "LUCCA / IT"
+  mode: "FREELANCE"
+  clearance: "PUBLIC"
+  operating_since: "2017"
+
+identity:
+  name: "Alessandro Santucci"
+  callsign: "AXELTHESAINT"
+  role: "Full Stack Developer"
+  statement: "Backend work and building systems are where I feel most at home, but the frontend doesn't scare me either."
+  primary_vector: "Backend and systems engineering"
+  mission_type: "Freelance — remote or hybrid"
+  domains: ["BACKEND", "DATABASES", "INFRASTRUCTURE", "FRONTEND"]
+
+contact:
+  email: "info@santuccialessandro.com"
+  github_user: "AxelTheSaint"
+  github_label: "github.com/AxelTheSaint"
+
+# --- COM-01 // CANALI -------------------------------------------------------
+#  Un canale con `url` vuota viene semplicemente saltato: non compare ne' nel
+#  pannello ne' nella riga di icone. Per aggiungerne uno serve un'icona
+#  corrispondente in scripts/engine/icons.py.
+#  `key` deve essere minuscolo e coincidere col nome dell'icona.
+#  `color` e' un ruolo della palette (green, blue, cyan, amber, violet, orange).
+channels:
+  - key: "email"
+    alt: "Email"
+    label: "EMAIL CHANNEL"
+    value: "info@santuccialessandro.com"
+    url: "mailto:info@santuccialessandro.com"
+    color: "green"
+  - key: "github"
+    alt: "GitHub"
+    label: "GITHUB DOSSIER"
+    value: "github.com/AxelTheSaint"
+    url: "https://github.com/AxelTheSaint"
+    color: "blue"
+  - key: "website"
+    alt: "Personal website"
+    label: "PRIMARY SITE"
+    value: "santuccialessandro.com"
+    url: "https://santuccialessandro.com"
+    color: "cyan"
+  - key: "garden"
+    alt: "Digital garden"
+    label: "DIGITAL GARDEN"
+    value: "paper.santuccialessandro.com"
+    url: "https://paper.santuccialessandro.com"
+    color: "amber"
+  - key: "linkedin"
+    alt: "LinkedIn"
+    label: "PROFESSIONAL NET"
+    # Il sito indica /in/alessandrosantucci, il vecchio README /in/alesantucci.
+    # LinkedIn risponde 999 ai bot, quindi non ho potuto verificare: CONTROLLA TU.
+    value: "linkedin.com/in/alessandrosantucci"
+    url: "https://www.linkedin.com/in/alessandrosantucci/"
+    color: "violet"
+  - key: "instagram"
+    alt: "Instagram"
+    label: "SHORT SIGNAL"
+    value: "instagram.com/axel_the_saint"
+    url: "https://www.instagram.com/axel_the_saint/"
+    color: "orange"
+
+availability:
+  headline: "Available for freelance backend, full-stack and infrastructure work — remote or hybrid from Lucca, Italy."
+  status: "AVAILABLE"
+
+# --- TRM-17 // ENGINEERING DOCTRINE -----------------------------------------
+doctrine:
+  statements:
+    - "Solving problems. Since the '90s."
+    - "Backend and systems first; frontend when the system needs it."
+    - "Legacy code is a system to understand, not to despise."
+    - "Adapt the tool to the job, not the job to the tool."
+  alert: "Backend first. Legacy included."
+
+# --- TLM-04 // TELEMETRY ----------------------------------------------------
+telemetry:
+  - label: "EXPERIENCE"
+    value: "13+"
+    unit: "YEARS IN IT"
+  - label: "CLIENTS"
+    value: "05"
+    unit: "ENTERPRISE"
+  - label: "FOCUS"
+    value: "SYS"
+    unit: "BACKEND"
+  - label: "STATUS"
+    value: "ON"
+    unit: "FREELANCE"
+
+# --- SYS-94 // CAPABILITY MATRIX --------------------------------------------
+#  ATTENZIONE: questi punteggi sono un'aggregazione dei valori per singola
+#  tecnologia pubblicati sul tuo sito (skills.json). Sono la prima cosa che un
+#  intervistatore tecnico sonda: rivedili tu prima di pubblicare.
+capabilities:
+  - label: "Backend Development"
+    score: 88
+    note: "PHP · Python · Django"
+    detail: "PHP from 5.3 to 8, Python 3 with Django and DRF; REST APIs, management systems and integrations."
+  - label: "Databases"
+    score: 85
+    note: "MySQL · MariaDB · PostgreSQL"
+    detail: "MySQL, MariaDB, PostgreSQL and SQLite; schema design, queries and data-heavy reporting."
+  - label: "Infrastructure"
+    score: 74
+    note: "Apache · Proxmox · VMware · Docker"
+    detail: "Apache, virtualization with Proxmox and VMware, containers with Docker, Linux administration."
+  - label: "Frontend Development"
+    score: 68
+    note: "JavaScript · Bootstrap · React"
+    detail: "HTML, CSS, JavaScript ES6+, Bootstrap and jQuery; React and Next.js on recent work."
+
+# --- EQP-23 // TECHNICAL LOADOUT --------------------------------------------
+loadout:
+  - code: "CORE"
+    label: "Languages"
+    items: ["PHP", "Python", "JavaScript", "SQL", "Bash"]
+  - code: "STACK"
+    label: "Frameworks"
+    items: ["Django", "DRF", "Laravel", "Bootstrap", "jQuery"]
+  - code: "OPS"
+    label: "Infrastructure"
+    items: ["Linux", "Apache", "Proxmox", "Docker", "Git"]
+
+# --- MSN-04 // MISSION CONTROL ----------------------------------------------
+#  status: ACTIVE | DELIVERED | BUILD | RESEARCH  (determina il colore del LED)
+#
+#  Qui ci sono gli ingaggi reali documentati sul tuo sito, non repository
+#  personali: il portfolio del sito e' ancora Lorem Ipsum, quindi non c'era
+#  nulla di verificabile da cui attingere. Quando pubblicherai i repo
+#  dimostrativi potrai sostituirli o affiancarli compilando `repo:` — il link
+#  compare da solo nel README.
+missions:
+  - code: "MSN-01"
+    name: "Gruppo Zucchetti"
+    kind: "ERP · HR · PAYROLL"
+    status: "ACTIVE"
+    description: "Payroll and HR software: legacy PHP hardening and migration to a PHP 8 and Angular architecture."
+    stack: ["PHP 8", "Angular", "MariaDB"]
+    repo: ""
+  - code: "MSN-02"
+    name: "Snaitech"
+    kind: "BETTING & IGAMING"
+    status: "DELIVERED"
+    description: "Retail and internal management systems for a national betting platform, in a regulated environment."
+    stack: ["PHP", "PostgreSQL", "Kubernetes"]
+    repo: ""
+  - code: "MSN-03"
+    name: "Gambini"
+    kind: "INDUSTRIAL AUTOMATION"
+    status: "DELIVERED"
+    description: "Web platform over live production lines: machine status, efficiency stats, maintenance and shifts."
+    stack: ["Python", "Django", "PostgreSQL"]
+    repo: ""
+  - code: "MSN-04"
+    name: "Edempg"
+    kind: "LEGACY MIGRATION"
+    status: "DELIVERED"
+    description: "Refactor and migration of internal management software from PHP to Python and Django."
+    stack: ["Python", "Django", "Docker"]
+    repo: ""
+
+# --- LOG-09 // FLIGHT LOG ---------------------------------------------------
+flight_log:
+  - year: "2013"
+    title: "IT operations and support"
+    detail: "Infrastructure, servers, networks and Exchange for public administration at D.T.P. s.r.l."
+  - year: "2017"
+    title: "Founded my own IT company"
+    detail: "Zainetto Verde Technology, later Serberus: labs for public administration and B2B web work."
+  - year: "2021"
+    title: "Enterprise engagements begin"
+    detail: "Industrial automation platform for Gambini: live production data, efficiency and maintenance."
+  - year: "NOW"
+    title: "Senior backend, freelance"
+    detail: "Payroll and ERP systems at Gruppo Zucchetti; legacy PHP moved to a modern architecture."
+
+# --- SIG-02 // SIGNAL FILTER ------------------------------------------------
+signal:
+  accept:
+    - "Backend and systems work"
+    - "6+ month horizon"
+    - "Technical autonomy"
+    - "Peer-level collaboration"
+  reject:
+    - "Generic screening funnels"
+    - "Endless interview rounds"
+    - "Unpaid take-home projects"
+    - "Disposable project staffing"

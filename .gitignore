@@ -1,0 +1,64 @@
+# =============================================================================
+#  AXELTHESAINT — cosa NON finisce nel repository pubblico
+# =============================================================================
+#  Attenzione: questo repo E' il profilo GitHub. Tutto ciò che resta tracciato è
+#  visibile pubblicamente nella lista file del profilo.
+#
+#  DEVONO restare tracciati, altrimenti il profilo non si vede:
+#    README.md            il profilo compilato
+#    assets/readme/*.svg  i pannelli che il README carica
+#    data/ scripts/ templates/ .github/ requirements.txt ENGINE.md
+# =============================================================================
+
+# --- Strumenti locali --------------------------------------------------------
+.claude/
+
+# --- Archivio e riferimento (solo locali, vedi ENGINE.md) --------------------
+# Non servono a costruire né a mostrare il profilo. Non essendo tracciati,
+# esistono SOLO su questa macchina: se servono altrove, copiarli a mano.
+old/
+reference/
+
+# --- Ambienti Python ---------------------------------------------------------
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Node (se si ripristina la dashboard React da old/04-react-dashboard) -----
+node_modules/
+.vite/
+dist/
+npm-debug.log*
+yarn-error.log*
+
+# --- Editor ------------------------------------------------------------------
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+
+# --- Sistema operativo -------------------------------------------------------
+Thumbs.db
+ehthumbs.db
+desktop.ini
+.DS_Store
+
+# --- Scarti di lavorazione ---------------------------------------------------
+*.log
+*.bak
+*.tmp
+*.orig
+*~
+scratch/
+tmp/
+
+# scarti di download/analisi
+site.html
+app.js
+*.json.bak
