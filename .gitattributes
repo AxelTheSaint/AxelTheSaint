@@ -1,0 +1,14 @@
+# Normalizzazione di fine riga decisa dal repository, non dalla configurazione
+# della singola macchina. Senza questo file, un clone su Windows con
+# core.autocrlf=false memorizzerebbe CRLF, il runner Linux rigenererebbe LF e la
+# CI committerebbe a ogni esecuzione: rumore infinito.
+* text=auto eol=lf
+
+# Gli asset generati sono testo a tutti gli effetti: cosi' i diff restano leggibili.
+*.svg text eol=lf
+
+# Binari, se un giorno ne verranno tracciati.
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

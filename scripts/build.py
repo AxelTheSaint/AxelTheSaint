@@ -162,11 +162,15 @@ def main() -> int:
     for stale in OUT.rglob("*.svg"):
         if str(stale.relative_to(OUT)).replace("\\", "/") not in assets:
             stale.unlink()
+    # Fine riga forzata a LF: su Windows Python tradurrebbe altrimenti ogni
+    # avanzamento in CRLF, e l'output non sarebbe piu' identico byte per byte
+    # a quello del runner Linux. Cosi' la build e' riproducibile ovunque,
+    # senza dipendere da come e' configurato git sulla macchina di turno.
     for name, svg in sorted(assets.items()):
         path = OUT / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(svg, encoding="utf-8")
-    README.write_text(readme, encoding="utf-8")
+        path.write_text(svg, encoding="utf-8", newline="\n")
+    README.write_text(readme, encoding="utf-8", newline="\n")
 
     total = sum(len(svg.encode()) for svg in assets.values())
     print(f"{len(assets)} SVG scritti in assets/ ({total / 1024:.0f} KB totali)")
